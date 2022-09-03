@@ -38,7 +38,8 @@ def send_message(bot, message):
 
 def get_api_answer(current_timestamp):
     """Делаем запрос к эндпоинту API.
-    В случае успешного ответа - возвращаем ответ."""
+    В случае успешного ответа - возвращаем ответ.
+    """
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -62,7 +63,8 @@ def get_api_answer(current_timestamp):
 
 def check_response(response):
     """Проверяем ответ API.
-    В случае корректности - возвращаем 'homeworks'."""
+    В случае корректности - возвращаем 'homeworks'.
+    """
     if isinstance(response['homeworks'], list):
         return response['homeworks']
     else:
@@ -70,8 +72,9 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Извлекаем из 'homeworks' статус и,
-    в случае успеха, возвращаем вердикт."""
+    """Извлекаем из 'homeworks' статус.
+    В случае успеха, возвращаем вердикт.
+    """
     try:
         homework_name = homework['homework_name']
         homework_status = homework['status']
