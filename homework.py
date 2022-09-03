@@ -25,14 +25,16 @@ HOMEWORK_STATUSES = {
 
 logging.basicConfig(
     level=logging.DEBUG,
-    filename='program.log', 
+    filename='program.log',
     format='%(asctime)s, %(levelname)s, %(message)s'
 )
 handler = logging.StreamHandler(stream=sys.stdout)
 
+
 def send_message(bot, message):
     """Просто отправляем сообщение в чат."""
     bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'{message}')
+
 
 def get_api_answer(current_timestamp):
     """
@@ -69,7 +71,8 @@ def check_response(response):
         return response['homeworks']
     else:
         raise Exception
-        
+
+
 def parse_status(homework):
     """
     Извлекаем из 'homeworks' статус и,
@@ -83,9 +86,11 @@ def parse_status(homework):
     except TypeError as error:
         logging.error(f'Возникла ошибка {error} при запросе.')
 
+
 def check_tokens():
     """Проверяем, что все токены на месте."""
     return all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID])
+
 
 def main():
     """Основная логика работы бота."""
