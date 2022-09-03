@@ -37,10 +37,8 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """
-    Делаем запрос к эндпоинту API,
-    в случае успешного ответа - возвращаем ответ.
-    """
+    """Делаем запрос к эндпоинту API.
+    В случае успешного ответа - возвращаем ответ."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -52,21 +50,19 @@ def get_api_answer(current_timestamp):
     except Exception as error:
         logging.error(f'Ошибка при запросе к основному API: {error}')
     if response.status_code != HTTPStatus.OK:
-            logging.error('Ошибка запроса')
-            raise IncorrectHttpStatus(
-                'Статус ответа от API не 200.',
-                response.status_code,
-                response.headers,
-                response.url
+        logging.error('Ошибка запроса')
+        raise IncorrectHttpStatus(
+            'Статус ответа от API не 200.',
+            response.status_code,
+            response.headers,
+            response.url
         )
     return response.json()
 
-    
+
 def check_response(response):
-    """
-    Проверяем ответ API.
-    В случае корректности - возвращаем 'homeworks'.
-    """
+    """Проверяем ответ API.
+    В случае корректности - возвращаем 'homeworks'."""
     if isinstance(response['homeworks'], list):
         return response['homeworks']
     else:
@@ -74,10 +70,8 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """
-    Извлекаем из 'homeworks' статус и,
-    в случае успеха, возвращаем вердикт.
-    """
+    """Извлекаем из 'homeworks' статус и,
+    в случае успеха, возвращаем вердикт."""
     try:
         homework_name = homework['homework_name']
         homework_status = homework['status']
@@ -117,6 +111,7 @@ def main():
                 message = f'Сбой в работе программы: {error}'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
                 time.sleep(RETRY_TIME)
-                
+
+
 if __name__ == '__main__':
     main()
