@@ -57,7 +57,7 @@ def get_api_answer(current_timestamp):
             params=params
         )
     except RequestException:
-        raise NotResponse('API не отвечает.')   
+        raise NotResponse('API не отвечает.')
     if response.status_code != HTTPStatus.OK:
         raise IncorrectHttpStatus(
             'Статус ответа от API не 200.',
@@ -124,7 +124,7 @@ def main():
     current_timestamp = int(time.time())
     statuses = []
     if check_tokens() is False:
-        loggin.critical('Не хватает токенов, выход из системы.')
+        logging.critical('Не хватает токенов, выход из системы.')
         sys.exit()
     last_error = ''
     while True:
