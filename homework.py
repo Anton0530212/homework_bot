@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from json import JSONDecodeError
 
 from exceptions import IncorrectHttpStatus, ErrorTelegram, \
-     NotResponse, JSONError, HomeworksNotList, InvalidStatus
+    NotResponse, JSONError, HomeworksNotList, InvalidStatus
 
 load_dotenv()
 
@@ -41,7 +41,7 @@ def send_message(bot, message):
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'{message}')
     except TelegramError:
         raise ErrorTelegram('Ошибка при отправки сообщения')
-        
+
 
 def get_api_answer(current_timestamp):
     """
