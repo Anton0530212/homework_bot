@@ -4,8 +4,9 @@ import logging
 import time
 from http import HTTPStatus
 
-import telegram
 import requests
+from telegram import Bot, TelegramError
+from requests import RequestException
 from dotenv import load_dotenv
 from json import JSONDecodeError
 
