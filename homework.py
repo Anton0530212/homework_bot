@@ -45,8 +45,8 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """
-    Делаем запрос к эндпоинту API.
+    """Делаем запрос к эндпоинту API.
+
     В случае успешного ответа - возвращаем ответ.
     """
     timestamp = current_timestamp or int(time.time())
@@ -76,8 +76,8 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """
-    Проверяем ответ API.
+    """Проверяем ответ API.
+
     В случае корректности - возвращаем 'homeworks'.
     """
     if not isinstance(response, dict):
@@ -96,8 +96,8 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """
-    Извлекаем из 'homeworks' статус.
+    """Извлекаем из 'homeworks' статус.
+
     В случае успеха, возвращаем вердикт.
     """
     if 'homework_name' not in homework:
@@ -107,7 +107,7 @@ def parse_status(homework):
     homework_name = homework['homework_name']
     homework_status = homework['status']
     if homework_status not in HOMEWORK_VERDICTS:
-        raise InvalidStatus('Не действительный статус ДЗ')
+        raise InvalidStatus(f'Статус {homework_name} ДЗ не действительный.')
     homework_name = homework['homework_name']
     homework_status = homework['status']
     verdict = HOMEWORK_VERDICTS[homework_status]
@@ -141,6 +141,8 @@ def main():
                 send_message(bot, message)
             else:
                 logging.debug('Статус не изменился')
+            if homework[0]['status'] == 'approved':
+                current_timestamp = int(time.time())
         except Exception as error:
             logging.error(str(error))
             if last_error != str(error):
@@ -148,6 +150,8 @@ def main():
                 send_message(bot, message)
                 logging.info('Сообщение об ошибке отправлено')
                 last_error = str(error)
+        finally:
+            time.sleep(RETRY_TIME)
 
 
 if __name__ == '__main__':
